@@ -1,66 +1,71 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace MancalaAssessment.ViewModels
 {
-    public class BoardViewModel : INotifyPropertyChanged
+    public class BoardViewModel : ViewModelBase
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        private ObservableCollection<int> stonesPlayer1 = new ObservableCollection<int>() { 4, 4, 4, 4, 4, 4 };
+        private ObservableCollection<int> _stonesPlayer1 = new ObservableCollection<int>() { 4, 4, 4, 4, 4, 4 };
         public ObservableCollection<int> StonesPlayer1
         {
-            get => stonesPlayer1;
+            get => _stonesPlayer1;
             set
             {
-                if (value != stonesPlayer1)
+                if (value != _stonesPlayer1)
                 {
-                    stonesPlayer1 = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StonesPlayer1)));
+                    _stonesPlayer1 = value;
+                    OnPropertyChanged();
+                    //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StonesPlayer1)));
                 }
             }
         }
 
-        private ObservableCollection<int> stonesPlayer2 = new ObservableCollection<int>() { 4, 4, 4, 4, 4, 4 };
+        private ObservableCollection<int> _stonesPlayer2 = new ObservableCollection<int>() { 4, 4, 4, 4, 4, 4 };
         public ObservableCollection<int> StonesPlayer2
         {
-            get => stonesPlayer2;
+            get => _stonesPlayer2;
             set
             {
-                if (value != stonesPlayer2)
+                if (value != _stonesPlayer2)
                 {
-                    stonesPlayer2 = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StonesPlayer2)));
+                    _stonesPlayer2 = value;
+                    OnPropertyChanged();
+                    //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StonesPlayer2)));
                 }
             }
         }
 
-        private int storePlayer1 = 0;
+        private int _storePlayer1 = 0;
         public int StorePlayer1
         {
-            get => storePlayer1;
+            get => _storePlayer1;
             set
             {
-                if (value != storePlayer1)
+                if (value != _storePlayer1)
                 {
-                    storePlayer1 = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StorePlayer1)));
+                    _storePlayer1 = value;
+                    OnPropertyChanged();
+                    //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StorePlayer1)));
                 }
             }
         }
 
-        private int storePlayer2 = 0;
+        private int _storePlayer2 = 0;
         public int StorePlayer2
         {
-            get => storePlayer2;
+            get => _storePlayer2;
             set
             {
-                if (value != storePlayer2)
+                if (value != _storePlayer2)
                 {
-                    storePlayer2 = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StorePlayer2)));
+                    _storePlayer2 = value;
+                    OnPropertyChanged();
+                    //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StorePlayer2)));
                 }
             }
         }
+
+        
     }
 }
