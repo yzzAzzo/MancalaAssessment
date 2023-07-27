@@ -20,19 +20,47 @@ namespace MancalaAssessment.Models
             //figyelj a pit number re h 0 e vagy 1 tol kezdodik DIK!!!
             var board = _boardState.Board;
             int stoneCount = board[pitNumber];
+
+            //Determine the index of the callerPlayers store and the opponents.
             int store = (_boardState.Board.Length / 2 * playerNumber) - 1;
+            int opponentStore = playerNumber == 1 ? store * 2 : store / 2;
+
+            //Reset the chosen pit because we took all the stones out.
             board[pitNumber] = 0;
 
             while (stoneCount > 0)
             {
                 pitNumber++;
-                if (pitNumber == store)
+                if (pitNumber == board.Length)
+                {
+                    //Reset the pit index, because we did a full circle
+                    pitNumber = 0;
+                }
+                if (pitNumber != opponentStore)
                 {
                     board[pitNumber]++;
                     stoneCount--; 
-
-                    //ITT TARTOTTAM
                 }
+
+                if (stoneCount == 0 && pitNumber == store)
+                {
+                    //return
+                    //Signal your turn Again.
+                }
+
+                if (stoneCount == 0 && pitNumber < store && pitNumber >= store - (board.Length / 2 - 1) && board[pitNumber] == 1)
+                {
+                    //In this case we have finished putting stones on our side in an empty pit.
+                    // note: if we subtract 2(the 2 stores) from board.Length we get the number that the opposing pits index and the
+                    // current one has to add up to. e.g.: board.Length == 14, -2 => 12, so opposing is 12 - pitNumber.
+
+                    int opposingPitNumber = (board.Length - 2) - pitNumber;
+                    board[store] += board[opposingPitNumber] + 1;
+
+                    //return
+                    //Signal your turn is over.
+                }
+
             }
 
             return GameStatus.Ongoing;
@@ -91,4 +119,5 @@ namespace MancalaAssessment.Models
         P2Win,
         Draw
     }
+
 }

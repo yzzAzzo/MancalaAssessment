@@ -16,7 +16,6 @@ namespace MancalaAssessment.ViewModels
                 {
                     _stonesPlayer1 = value;
                     OnPropertyChanged();
-                    //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StonesPlayer1)));
                 }
             }
         }
@@ -31,7 +30,6 @@ namespace MancalaAssessment.ViewModels
                 {
                     _stonesPlayer2 = value;
                     OnPropertyChanged();
-                    //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StonesPlayer2)));
                 }
             }
         }
@@ -46,7 +44,6 @@ namespace MancalaAssessment.ViewModels
                 {
                     _storePlayer1 = value;
                     OnPropertyChanged();
-                    //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StorePlayer1)));
                 }
             }
         }
