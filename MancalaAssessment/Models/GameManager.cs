@@ -110,6 +110,13 @@ namespace MancalaAssessment.Models
         public int[] Board;
         public GameStatus GameStatus;
         public int PlayerTurn;
+
+        public BoardState(int[] board,int playerTurn)
+        {
+            Board = board;
+            GameStatus = GameStatus.Ongoing;
+            PlayerTurn = playerTurn;
+        }
     }
 
     public enum GameStatus

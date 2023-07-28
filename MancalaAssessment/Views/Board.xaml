@@ -6,6 +6,9 @@
              xmlns:local="clr-namespace:MancalaAssessment.Views"
              mc:Ignorable="d" 
              d:DesignHeight="240" >
+    <UserControl.Resources>
+        
+    </UserControl.Resources>
     <Grid Height="240">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="120" />
@@ -23,24 +26,41 @@
             </Grid.RowDefinitions>
             
             <!-- Pits Player 2 -->
-            <UniformGrid x:Name="PitsPlayer2" Grid.Row="0" Rows="1">
-                <local:Pit Stones="{Binding StonesPlayer2[0]}" Stroke="Magenta" Click="MancalaPitButton_Click" />
-                <local:Pit Stones="{Binding StonesPlayer2[1]}" Stroke="Magenta" Click="MancalaPitButton_Click" />
-                <local:Pit Stones="{Binding StonesPlayer2[2]}" Stroke="Magenta" Click="MancalaPitButton_Click" />
-                <local:Pit Stones="{Binding StonesPlayer2[3]}" Stroke="Magenta" Click="MancalaPitButton_Click" />
-                <local:Pit Stones="{Binding StonesPlayer2[4]}" Stroke="Magenta" Click="MancalaPitButton_Click" />
-                <local:Pit Stones="{Binding StonesPlayer2[5]}" Stroke="Magenta" Click="MancalaPitButton_Click" />
-            </UniformGrid>
+            <ListView Grid.Row="0" ItemsSource="{Binding StonesPlayer2}">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"></StackPanel>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <local:Pit Stones="{Binding}" Stroke="Magenta" 
+                                   Command="{Binding DataContext.MoveCommand, 
+                                                                RelativeSource={RelativeSource 
+                                                                AncestorType={x:Type UserControl}}}" 
+                                   CommandParameter="{Binding SelectedIndex,  
+                                                                RelativeSource={RelativeSource 
+                                                                AncestorType={x:Type ListView}}}">
+                        </local:Pit>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
 
-            <!-- Pits Player 1 -->
-            <UniformGrid x:Name="PitsPlayer1" Grid.Row="1" Rows="1">
-                <local:Pit Stones="{Binding StonesPlayer1[0]}" Stroke="CornflowerBlue" Click="MancalaPitButton_Click" />
-                <local:Pit Stones="{Binding StonesPlayer1[1]}" Stroke="CornflowerBlue" Click="MancalaPitButton_Click" />
-                <local:Pit Stones="{Binding StonesPlayer1[2]}" Stroke="CornflowerBlue" Click="MancalaPitButton_Click" />
-                <local:Pit Stones="{Binding StonesPlayer1[3]}" Stroke="CornflowerBlue" Click="MancalaPitButton_Click" />
-                <local:Pit Stones="{Binding StonesPlayer1[4]}" Stroke="CornflowerBlue" Click="MancalaPitButton_Click" />
-                <local:Pit Stones="{Binding StonesPlayer1[5]}" Stroke="CornflowerBlue" Click="MancalaPitButton_Click" />
-            </UniformGrid>
+            
+            <ListView Grid.Row="1" ItemsSource="{Binding StonesPlayer1}" >
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"></StackPanel>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <local:Pit Stones="{Binding}" Stroke="CornflowerBlue" Command="{Binding DataContext.MoveCommand, 
+                                   RelativeSource={RelativeSource 
+                                   AncestorType={x:Type UserControl}}}" ></local:Pit>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
         <Grid x:Name="StorePlayer1" Grid.Column="2">
             <Ellipse Width="80" Height="200" HorizontalAlignment="Center" VerticalAlignment="Center" Stroke="CornflowerBlue" Fill="#EEE" />

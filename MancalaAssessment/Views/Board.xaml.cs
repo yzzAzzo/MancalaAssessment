@@ -13,10 +13,5 @@ namespace MancalaAssessment.Views
         {
             InitializeComponent();
         }
-
-        private void MancalaPitButton_Click(object sender, RoutedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
