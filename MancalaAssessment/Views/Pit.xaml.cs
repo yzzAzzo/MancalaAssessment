@@ -35,6 +35,19 @@ namespace MancalaAssessment.Views
             new PropertyMetadata(0)
         );
 
+        public int OwnerPlayer
+        {
+            get { return (int)GetValue(OwnerPlayerProperty); }
+            set { SetValue(OwnerPlayerProperty, value); }
+        }
+
+        public static readonly DependencyProperty OwnerPlayerProperty = DependencyProperty.Register(
+            nameof(OwnerPlayer),
+            typeof(int),
+            typeof(Pit),
+            new PropertyMetadata(1)
+        );
+
         public Pit()
         {
             InitializeComponent();

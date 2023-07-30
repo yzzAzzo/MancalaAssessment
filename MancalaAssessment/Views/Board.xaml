@@ -42,12 +42,12 @@
                                                                 RelativeSource={RelativeSource 
                                                                 AncestorType={x:Type ListView}}}">
                         </local:Pit>
-                    </DataTemplate>
+                    </DataTemplate> 
                 </ListView.ItemTemplate>
             </ListView>
 
-            
-            <ListView Grid.Row="1" ItemsSource="{Binding StonesPlayer1}" >
+
+            <ListView x:Name="root" Grid.Row="1" ItemsSource="{Binding Pits}" >
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Horizontal"></StackPanel>
@@ -55,9 +55,11 @@
                 </ListView.ItemsPanel>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <local:Pit Stones="{Binding}" Stroke="CornflowerBlue" Command="{Binding DataContext.MoveCommand, 
-                                   RelativeSource={RelativeSource 
-                                   AncestorType={x:Type UserControl}}}" ></local:Pit>
+                        <local:Pit Command="{Binding DataContext.MoveCommand, 
+                                                                RelativeSource={RelativeSource 
+                                                                AncestorType={x:Type UserControl}}}" 
+                                   CommandParameter="{Binding ElementName=root, Path=(FocusManager.FocusedElement)}">
+                        </local:Pit>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

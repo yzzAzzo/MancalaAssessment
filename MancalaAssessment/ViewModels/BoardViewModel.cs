@@ -4,12 +4,42 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using MancalaAssessment.Command;
 using MancalaAssessment.Models;
+using MancalaAssessment.Views;
 
 namespace MancalaAssessment.ViewModels
 {
     public class BoardViewModel : ViewModelBase
     {
         private GameManager _gameManager;
+
+        private int _playerNumber = 0;
+        public int PlayerNumber
+        {
+            get => _playerNumber;
+            set
+            {
+                if (value != _playerNumber)
+                {
+                    _playerNumber = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private ObservableCollection<Pit> _pits;
+
+        public ObservableCollection<int> Pits
+        {
+            get => _stonesPlayer1;
+            set
+            {
+                if (value != _stonesPlayer1)
+                {
+                    _stonesPlayer1 = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         private ObservableCollection<int> _stonesPlayer1 = new ObservableCollection<int>(Enumerable.Repeat(4, GameConstants.BOARD_SIZE / 2).ToArray());
         public ObservableCollection<int> StonesPlayer1
@@ -72,10 +102,13 @@ namespace MancalaAssessment.ViewModels
         public BoardViewModel()
         {
             MoveCommand = new DelegateCommand(MoveExecute);
+
+            _pits = new ObservableCollection<Pit>(
+                Enumerable.Repeat(new Pit { OwnerPlayer = 1, Stones = 4}, GameConstants.BOARD_SIZE / 2).ToArray()
+                    .Concat(Enumerable.Repeat(new Pit { OwnerPlayer = 2, Stones = 4 }, GameConstants.BOARD_SIZE / 2).ToArray()));
+
             _gameManager = new GameManager(new BoardState(Enumerable.Repeat(4, GameConstants.BOARD_SIZE).ToArray(), 1));
         }
-
-
 
         private void StartNewGame()
         {
@@ -86,7 +119,8 @@ namespace MancalaAssessment.ViewModels
 
         private void MoveExecute(object? parameter)
         {
-            var asd = 1;
+            //TODO parameter is the focused element, check later if this can go wrong.
+            var boardState = _gameManager.Move(1);
 
         }
 

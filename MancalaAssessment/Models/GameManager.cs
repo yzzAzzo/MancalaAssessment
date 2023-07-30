@@ -6,36 +6,34 @@ namespace MancalaAssessment.Models
     internal class GameManager
     {
         private BoardState _boardState;
-        private readonly int _boardSize;
 
         //Boards will include stores
         public GameManager(BoardState boardState) 
         {
             _boardState = boardState;
-            _boardSize = boardState.Board.Count();
         }
 
-        private GameStatus Move(int playerNumber, int pitNumber)
+        public BoardState Move(int pitNumber)
         {
             //figyelj a pit number re h 0 e vagy 1 tol kezdodik DIK!!!
             var board = _boardState.Board;
             int stoneCount = board[pitNumber];
 
+
             //Determine the index of the callerPlayers store and the opponents.
-            int store = (_boardState.Board.Length / 2 * playerNumber) - 1;
-            int opponentStore = playerNumber == 1 ? store * 2 : store / 2;
+            int store = (_boardState.Board.Length / 2 * _boardState.PlayerNumber) - 1;
+            int opponentStore = _boardState.PlayerNumber == 1 ? store * 2 : store / 2;
 
             //Reset the chosen pit because we took all the stones out.
             board[pitNumber] = 0;
+            pitNumber++;
+
+            //TODO Rethink all of this
+
 
             while (stoneCount > 0)
             {
-                pitNumber++;
-                if (pitNumber == board.Length)
-                {
-                    //Reset the pit index, because we did a full circle
-                    pitNumber = 0;
-                }
+               
                 if (pitNumber != opponentStore)
                 {
                     board[pitNumber]++;
@@ -44,6 +42,7 @@ namespace MancalaAssessment.Models
 
                 if (stoneCount == 0 && pitNumber == store)
                 {
+                    return _boardState;
                     //return
                     //Signal your turn Again.
                 }
@@ -57,13 +56,27 @@ namespace MancalaAssessment.Models
                     int opposingPitNumber = (board.Length - 2) - pitNumber;
                     board[store] += board[opposingPitNumber] + 1;
 
+                    _boardState.PlayerNumber = _boardState.PlayerNumber == 2 ? 1: 2;
+
+                    return _boardState;
                     //return
                     //Signal your turn is over.
                 }
 
+                pitNumber++;
+
+                if (pitNumber == board.Length)
+                {
+                    //Reset the pit index, because we did a full circle
+                    pitNumber = 0;
+                }
             }
 
-            return GameStatus.Ongoing;
+            _boardState.PlayerNumber = _boardState.PlayerNumber == 2 ? 1 : 2;
+
+            return _boardState;
+            //Signal end of turn
+
         }
 
         private GameStatus GetGameStatus()
@@ -109,13 +122,13 @@ namespace MancalaAssessment.Models
     {
         public int[] Board;
         public GameStatus GameStatus;
-        public int PlayerTurn;
+        public int PlayerNumber;
 
-        public BoardState(int[] board,int playerTurn)
+        public BoardState(int[] board,int playerNumber)
         {
             Board = board;
             GameStatus = GameStatus.Ongoing;
-            PlayerTurn = playerTurn;
+            PlayerNumber = playerNumber;
         }
     }
 
