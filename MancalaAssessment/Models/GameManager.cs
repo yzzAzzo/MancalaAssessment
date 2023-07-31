@@ -84,7 +84,7 @@ namespace MancalaAssessment.Models
             bool isGameOver = false;
             var board = _boardState.Board;
 
-            //Thiese elements of the boards are alwys the store elements no matter the size.
+            //Thiese elements of the boards are always the store elements no matter the size.
             var store1 = (board.Length / 2) - 1;
             var store2 = board.Length - 1;
 

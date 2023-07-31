@@ -6,5 +6,8 @@
              StartupUri="Views/MainWindow.xaml">
     <Application.Resources>
         <converters:OwnerPlayerToStrokeConverter x:Key="OwnerPlayerToStrokeConverter"/>
+        <converters:BoardSizeToHalfTheBoardSizeConverter x:Key="BoardSizeToHalfTheBoardSizeConverter"/>
+        <converters:CollectionToCollectionInCollectionConverter x:Key="CollectionToCollectionInCollectionConverter"/>
+        <converters:OwnerPlayerToGridRowConverter x:Key="OwnerPlayerToGridRowConverter"/>
     </Application.Resources>
 </Application>

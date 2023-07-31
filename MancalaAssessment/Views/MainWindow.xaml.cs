@@ -9,13 +9,10 @@ namespace MancalaAssessment.Views
     /// </summary>
     public partial class MainWindow : Window
     {
-        BoardViewModel boardViewModel;
         public MainWindow()
         {
             InitializeComponent();
             this.DataContext = new MainWindowViewModel();
-            boardViewModel = new BoardViewModel();
-            GameBoard.DataContext = boardViewModel;
         }
 
         private void NewGame_Click(object sender, RoutedEventArgs e)

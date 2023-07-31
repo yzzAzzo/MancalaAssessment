@@ -19,51 +19,74 @@
             <Ellipse Width="80" Height="200" HorizontalAlignment="Center" VerticalAlignment="Center" Stroke="Magenta" Fill="#EEE" />
             <TextBlock Text="{Binding StorePlayer2, FallbackValue=0}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" />
         </Grid>
-        <Grid x:Name="AllPits" Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            
-            <!-- Pits Player 2 -->
-            <ListView Grid.Row="0" ItemsSource="{Binding StonesPlayer2}">
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal"></StackPanel>
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <local:Pit Stones="{Binding}" Stroke="Magenta" 
-                                   Command="{Binding DataContext.MoveCommand, 
+
+        <!--TODO investigate why did this works...(the UniformGrid part)-->
+        <!--<ItemsControl Grid.Column="1" ItemsSource="{Binding PitDatas}" AlternationCount="{Binding PitDatas.Count}">
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ContentPresenter">
+                    <Setter Property="Grid.Row" Value="{Binding OwnerPlayer, Converter={StaticResource OwnerPlayerToGridRowConverter}}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Background="Transparent" Rows="2" Columns="{Binding PitDatas.Count, Converter={StaticResource BoardSizeToHalfTheBoardSizeConverter}}" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <local:Pit Stones="{Binding Stones}"
+                               OwnerPlayer="{Binding OwnerPlayer}"
+                               Command="{Binding DataContext.MoveCommand, 
                                                                 RelativeSource={RelativeSource 
                                                                 AncestorType={x:Type UserControl}}}" 
-                                   CommandParameter="{Binding SelectedIndex,  
-                                                                RelativeSource={RelativeSource 
-                                                                AncestorType={x:Type ListView}}}">
-                        </local:Pit>
-                    </DataTemplate> 
-                </ListView.ItemTemplate>
-            </ListView>
+                               CommandParameter="{Binding Path=(ItemsControl.AlternationIndex), 
+                                                                 RelativeSource={RelativeSource TemplatedParent}}">
+                    </local:Pit>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>-->
 
-
-            <ListView x:Name="root" Grid.Row="1" ItemsSource="{Binding Pits}" >
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal"></StackPanel>
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <local:Pit Command="{Binding DataContext.MoveCommand, 
+        <ItemsControl Grid.Column="1" ItemsSource="{Binding PitDatas, Converter={StaticResource CollectionToCollectionInCollectionConverter}}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                           <RowDefinition Height="*"></RowDefinition>
+                           <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ContentPresenter">
+                    <Setter Property="Grid.Row" Value="{Binding OwnerPlayer, Converter={StaticResource OwnerPlayerToGridRowConverter}}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                   <ItemsControl ItemsSource="{Binding}">
+                       <ItemsControl.ItemsPanel>
+                           <ItemsPanelTemplate>
+                               <UniformGrid Background="Transparent" Rows="1" Columns="{Binding PitDatas.Count, Converter={StaticResource BoardSizeToHalfTheBoardSizeConverter}}" />
+                           </ItemsPanelTemplate>
+                       </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                           <DataTemplate>
+                               <local:Pit Stones="{Binding Stones}"
+                                          OwnerPlayer="{Binding OwnerPlayer}"
+                                          Command="{Binding DataContext.MoveCommand, 
                                                                 RelativeSource={RelativeSource 
                                                                 AncestorType={x:Type UserControl}}}" 
-                                   CommandParameter="{Binding ElementName=root, Path=(FocusManager.FocusedElement)}">
-                        </local:Pit>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </Grid>
+                                          CommandParameter="{Binding Path=(ItemsControl.AlternationIndex), 
+                                                                 RelativeSource={RelativeSource TemplatedParent}}">
+                               </local:Pit>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                   </ItemsControl>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
         <Grid x:Name="StorePlayer1" Grid.Column="2">
             <Ellipse Width="80" Height="200" HorizontalAlignment="Center" VerticalAlignment="Center" Stroke="CornflowerBlue" Fill="#EEE" />
             <TextBlock Text="{Binding StorePlayer1, FallbackValue=0}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" />

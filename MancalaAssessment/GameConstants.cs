@@ -8,6 +8,6 @@ namespace MancalaAssessment
 {
     public static class GameConstants
     {
-        public static readonly int BOARD_SIZE = 12;
+        public static readonly int BOARD_SIZE = 14;
     }
 }

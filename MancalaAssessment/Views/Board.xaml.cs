@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MancalaAssessment.ViewModels;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -12,6 +13,7 @@ namespace MancalaAssessment.Views
         public Board()
         {
             InitializeComponent();
+            DataContext = new BoardViewModel();
         }
     }
 }
