@@ -9,5 +9,7 @@
         <converters:BoardSizeToHalfTheBoardSizeConverter x:Key="BoardSizeToHalfTheBoardSizeConverter"/>
         <converters:CollectionToCollectionInCollectionConverter x:Key="CollectionToCollectionInCollectionConverter"/>
         <converters:OwnerPlayerToGridRowConverter x:Key="OwnerPlayerToGridRowConverter"/>
+        <converters:ItemsControlToItemsCountConverter x:Key="ItemsControlToItemsCountConverter"/>
+        <converters:PlayerNumberToEnabledConverter x:Key="PlayerNumberToEnabledConverter"/>
     </Application.Resources>
 </Application>

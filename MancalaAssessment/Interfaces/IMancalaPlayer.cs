@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MancalaAssessment.Interfaces
 {
-    internal interface IMancalaPlayer
+    internal interface IGameManager
     {
         ObservableCollection<int> StoneCollection { get; set; }
 

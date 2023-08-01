@@ -13,7 +13,8 @@ namespace MancalaAssessment.Views
         public Board()
         {
             InitializeComponent();
-            DataContext = new BoardViewModel();
+            var viewModel = new BoardViewModel();
+            DataContext = viewModel;
         }
     }
 }
