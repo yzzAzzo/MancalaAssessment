@@ -1,17 +1,14 @@
 ﻿using System.Linq;
 using System.Runtime.CompilerServices;
+using MancalaAssessment.Interfaces;
 
 namespace MancalaAssessment.Models
 {
-    internal class GameManager
+    public class GameManager : IGameManager
     {
 
         private BoardState _boardState;
-        public BoardState BoardState
-        {
-            get => _boardState;
-            set => _boardState = value;
-        }
+        public BoardState BoardState => _boardState;
 
 
         //Boards will include stores
@@ -36,7 +33,6 @@ namespace MancalaAssessment.Models
             pitNumber++;
 
             //TODO Rethink all of this
-
 
             while (stoneCount > 0)
             {
@@ -101,7 +97,7 @@ namespace MancalaAssessment.Models
                 isGameOver = true;
                 return GameStatus.P1Win;
             }
-            else if(!board.Skip(7).Take(6).Any(x => x > 0))
+            if(!board.Skip(7).Take(6).Any(x => x > 0))
             {
                 board[store1] += board.Take(6).Sum();
                 isGameOver = true;
@@ -116,7 +112,7 @@ namespace MancalaAssessment.Models
             {
                 return GameStatus.P1Win;
             }
-            else if (board[store1] < board[store2])
+            if (board[store1] < board[store2])
             {
                 return GameStatus.P2Win;
             }

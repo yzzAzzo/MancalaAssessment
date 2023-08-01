@@ -4,13 +4,14 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MancalaAssessment.Models;
 
 namespace MancalaAssessment.Interfaces
 {
-    internal interface IGameManager
+    public interface IGameManager
     {
-        ObservableCollection<int> StoneCollection { get; set; }
+       BoardState BoardState { get; }
+       BoardState Move(int pitNumber);
 
-        int Store { get; set; }
     }
 }

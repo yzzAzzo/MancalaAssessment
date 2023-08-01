@@ -2,6 +2,7 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using MancalaAssessment.Models;
 
 namespace MancalaAssessment.Views
 {
@@ -13,7 +14,8 @@ namespace MancalaAssessment.Views
         public Board()
         {
             InitializeComponent();
-            var viewModel = new BoardViewModel();
+            var gameManager = new GameManager();
+            var viewModel = new BoardViewModel(gameManager);
             DataContext = viewModel;
         }
     }

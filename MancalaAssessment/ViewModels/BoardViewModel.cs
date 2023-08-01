@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Windows.Input;
 using MancalaAssessment.Command;
+using MancalaAssessment.Interfaces;
 using MancalaAssessment.Models;
 
 namespace MancalaAssessment.ViewModels
@@ -14,7 +15,7 @@ namespace MancalaAssessment.ViewModels
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        private GameManager _gameManager;
+        private IGameManager _gameManager;
 
         private int _playerNumber = 0;
         public int PlayerNumber
@@ -78,7 +79,7 @@ namespace MancalaAssessment.ViewModels
         }
 
         public DelegateCommand MoveCommand { get; }
-        public BoardViewModel()
+        public BoardViewModel(IGameManager gameManager)
         {
             MoveCommand = new DelegateCommand(MoveExecute);
 
@@ -99,7 +100,7 @@ namespace MancalaAssessment.ViewModels
             }
 
             //TODO set 0 for the stores.
-            _gameManager = new GameManager();
+            _gameManager = gameManager;
             _playerNumber = _gameManager.BoardState.PlayerNumber;
         }
 
