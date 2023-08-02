@@ -8,6 +8,7 @@ using System.Windows.Input;
 using MancalaAssessment.Command;
 using MancalaAssessment.Interfaces;
 using MancalaAssessment.Models;
+using MancalaAssessment.Views;
 
 namespace MancalaAssessment.ViewModels
 {
@@ -16,8 +17,21 @@ namespace MancalaAssessment.ViewModels
         public event PropertyChangedEventHandler? PropertyChanged;
 
         private IGameManager _gameManager;
+        private GameStatus _gameStatus;
+
+        public GameStatus GameStatus
+        {
+            get { return _gameStatus; }
+            set
+            {
+                _gameStatus = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(GameStatus)));
+            }
+        }
+
 
         private int _playerNumber = 0;
+
         public int PlayerNumber
         {
             get => _playerNumber;
@@ -29,6 +43,7 @@ namespace MancalaAssessment.ViewModels
         }
 
         private ObservableCollection<PitData> _stonesPlayer1;
+
         public ObservableCollection<PitData> StonesPlayer1
         {
             get => _stonesPlayer1;
@@ -40,6 +55,7 @@ namespace MancalaAssessment.ViewModels
         }
 
         private ObservableCollection<PitData> _stonesPlayer2;
+
         public ObservableCollection<PitData> StonesPlayer2
         {
             get => _stonesPlayer2;
@@ -51,6 +67,7 @@ namespace MancalaAssessment.ViewModels
         }
 
         private int _storePlayer1 = 0;
+
         public int StorePlayer1
         {
             get => _storePlayer1;
@@ -65,6 +82,7 @@ namespace MancalaAssessment.ViewModels
         }
 
         private int _storePlayer2 = 0;
+
         public int StorePlayer2
         {
             get => _storePlayer2;
@@ -79,9 +97,12 @@ namespace MancalaAssessment.ViewModels
         }
 
         public DelegateCommand MoveCommand { get; }
+        public DelegateCommand NewGameCommand { get; }
+
         public BoardViewModel(IGameManager gameManager)
         {
             MoveCommand = new DelegateCommand(MoveExecute);
+            NewGameCommand = new DelegateCommand(StartNewGame);
 
             var pitCount = GameConstants.BOARD_SIZE - 2;
             _stonesPlayer1 = new ObservableCollection<PitData>();
@@ -99,25 +120,25 @@ namespace MancalaAssessment.ViewModels
                 }
             }
 
-            //TODO set 0 for the stores.
             _gameManager = gameManager;
             _playerNumber = _gameManager.BoardState.PlayerNumber;
         }
 
 
-        private void StartNewGame()
+        private void StartNewGame(object? parameter)
         {
-            //Instanciates the gameManager with the right settings(who starts, board size)
-            _gameManager = new GameManager();
+            var boardState = new BoardState();
+
+            _gameManager = new GameManager(boardState);
+            UpdateUi(boardState);
         }
+
         private void MoveExecute(object? parameter)
         {
             if (parameter != null)
             {
                 //We get the pitNumber based on the upcoming player.
                 int pitNumber;
-                // check for GameConstants.BOARD_SIZE are not odd
-                
 
                 if (_gameManager.BoardState.PlayerNumber == 2)
                 {
@@ -131,6 +152,12 @@ namespace MancalaAssessment.ViewModels
                 var boardState = _gameManager.Move(pitNumber);
 
                 UpdateUi(boardState);
+                GameStatus = _gameManager.GetGameStatus();
+
+                if (GameStatus != GameStatus.Ongoing)
+                {
+                    ShowGameEndText();
+                }
             }
         }
 
@@ -143,7 +170,8 @@ namespace MancalaAssessment.ViewModels
 
             StorePlayer1 = boardState.Board[halfOfPits];
             StorePlayer2 = boardState.Board[GameConstants.BOARD_SIZE - 1];
-            var pitList = boardState.Board.Take(halfOfPits).Concat(boardState.Board.Skip(halfOfPits + 1).Take(halfOfPits)).ToList();
+            var pitList = boardState.Board.Take(halfOfPits)
+                .Concat(boardState.Board.Skip(halfOfPits + 1).Take(halfOfPits)).ToList();
 
 
             for (int i = 0; i < halfOfPits; i++)
@@ -152,6 +180,14 @@ namespace MancalaAssessment.ViewModels
                 _stonesPlayer2[i].Stones = pitList.Skip(halfOfPits).ToArray()[i];
 
             }
+        }
+
+        private void ShowGameEndText()
+        {
+            var gameEndText = GameStatus == GameStatus.P1Win ? "Player 1 WON!" : GameStatus == GameStatus.P2Win ? "Player 2 WON!" : "It is a Draw";
+            GameEndWindow gameEndWindow = new GameEndWindow(gameEndText, NewGameCommand);
+
+            gameEndWindow.Show();
         }
     }
 }

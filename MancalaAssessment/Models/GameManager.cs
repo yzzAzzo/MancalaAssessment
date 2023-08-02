@@ -10,21 +10,22 @@ namespace MancalaAssessment.Models
         private BoardState _boardState;
         public BoardState BoardState => _boardState;
 
-
-        //Boards will include stores
-        public GameManager() 
+        public GameManager(BoardState board) 
         {
-            _boardState = new BoardState();
+            _boardState = board;
         }
 
+
+        /// <summary>
+        /// This plays one iteration on the Mancala table.
+        /// </summary>
+        /// <param name="pitNumber">Selected Pit number.</param>
+        /// <returns>BoardState</returns>
         public BoardState Move(int pitNumber)
         {
-            //figyelj a pit number re h 0 e vagy 1 tol kezdodik DIK!!!
             var board = _boardState.Board;
             int stoneCount = board[pitNumber];
 
-
-            //Determine the index of the callerPlayers store and the opponents.
             int store = (_boardState.Board.Count / 2 * _boardState.PlayerNumber) - 1;
             int opponentStore = _boardState.PlayerNumber == 1 ? store * 2 : store / 2;
 
@@ -46,24 +47,27 @@ namespace MancalaAssessment.Models
                 if (stoneCount == 0 && pitNumber == store)
                 {
                     return _boardState;
-                    //return
-                    //Signal your turn Again.
                 }
 
                 if (stoneCount == 0 && pitNumber < store && pitNumber >= store - (board.Count / 2 - 1) && board[pitNumber] == 1)
                 {
-                    //In this case we have finished putting stones on our side in an empty pit.
+                    // In this case we have finished putting stones on our side in an empty pit.
                     // note: if we subtract 2(the 2 stores) from board.Length we get the number that the opposing pits index and the
                     // current one has to add up to. e.g.: board.Length == 14, -2 => 12, so opposing is 12 - pitNumber.
-
+                    
+                    
                     int opposingPitNumber = (board.Count - 2) - pitNumber;
+
+                    // we take out our last as well and the opponents
+                    board[pitNumber]--;
+                    board[opposingPitNumber] = 0;
+
+                    //and put it in our store
                     board[store] += board[opposingPitNumber] + 1;
 
                     _boardState.PlayerNumber = _boardState.PlayerNumber == 2 ? 1: 2;
 
                     return _boardState;
-                    //return
-                    //Signal your turn is over.
                 }
 
                 pitNumber++;
@@ -78,11 +82,14 @@ namespace MancalaAssessment.Models
             _boardState.PlayerNumber = _boardState.PlayerNumber == 2 ? 1 : 2;
 
             return _boardState;
-            //Signal end of turn
 
         }
 
-        private GameStatus GetGameStatus()
+        /// <summary>
+        /// Gets if the game is ongoing or over, and if so who won.
+        /// </summary>
+        /// <returns>GameStatus object.</returns>
+        public GameStatus GetGameStatus()
         {
             bool isGameOver = false;
             var board = _boardState.Board;
@@ -90,18 +97,17 @@ namespace MancalaAssessment.Models
             //Thiese elements of the boards are always the store elements no matter the size.
             var store1 = (board.Count / 2) - 1;
             var store2 = board.Count - 1;
+            var halfOfPits = GameConstants.BOARD_SIZE / 2 - 1;
 
-            if (!board.Take(6).Any(x => x > 0))
+            if (!board.Take(halfOfPits).Any(x => x > 0))
             {
-                board[store2] += board.Skip(7).Take(6).Sum();
+                board[store2] += board.Skip(halfOfPits + 1).Take(halfOfPits).Sum();
                 isGameOver = true;
-                return GameStatus.P1Win;
             }
-            if(!board.Skip(7).Take(6).Any(x => x > 0))
+            if(!board.Skip(halfOfPits + 1).Take(halfOfPits).Any(x => x > 0))
             {
-                board[store1] += board.Take(6).Sum();
+                board[store1] += board.Take(halfOfPits).Sum();
                 isGameOver = true;
-                return GameStatus.P2Win;
             }
             if (!isGameOver)
             {

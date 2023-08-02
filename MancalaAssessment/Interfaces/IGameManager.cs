@@ -12,6 +12,7 @@ namespace MancalaAssessment.Interfaces
     {
        BoardState BoardState { get; }
        BoardState Move(int pitNumber);
+       GameStatus GetGameStatus();
 
     }
 }

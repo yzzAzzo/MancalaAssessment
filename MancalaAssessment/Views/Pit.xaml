@@ -26,4 +26,14 @@
             </Grid>
         </ControlTemplate>
     </Button.Template>
+    <Button.Style>
+        <Style TargetType="Button">
+            <Setter Property="IsEnabled" Value="{Binding Stones, Converter={StaticResource StonesCountToIsEnabledConverter}}"  />
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.25"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Button.Style>
 </Button>

@@ -14,7 +14,8 @@ namespace MancalaAssessment.Views
         public Board()
         {
             InitializeComponent();
-            var gameManager = new GameManager();
+            var boardState = new BoardState();
+            var gameManager = new GameManager(boardState);
             var viewModel = new BoardViewModel(gameManager);
             DataContext = viewModel;
         }

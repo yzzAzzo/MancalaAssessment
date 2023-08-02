@@ -20,13 +20,13 @@ public class BoardState
     {
         for (int i = 0; i < GameConstants.BOARD_SIZE; i++)
         {
-            if (i != GameConstants.BOARD_SIZE - 1 || i != GameConstants.BOARD_SIZE / 2 - 1)
+            if (i != GameConstants.BOARD_SIZE - 1 && i != GameConstants.BOARD_SIZE / 2 - 1)
             {
                 Board.Add(4);
             }
             else
             {
-                Board.Add(1);
+                Board.Add(0);
             }
         }
     }

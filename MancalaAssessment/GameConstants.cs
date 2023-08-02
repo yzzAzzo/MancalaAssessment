@@ -8,6 +8,7 @@ namespace MancalaAssessment
 {
     public static class GameConstants
     {
+        // Value of this must be even.
         public static readonly int BOARD_SIZE = 14;
     }
 }

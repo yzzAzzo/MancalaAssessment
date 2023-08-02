@@ -7,9 +7,9 @@
     <Application.Resources>
         <converters:OwnerPlayerToStrokeConverter x:Key="OwnerPlayerToStrokeConverter"/>
         <converters:BoardSizeToHalfTheBoardSizeConverter x:Key="BoardSizeToHalfTheBoardSizeConverter"/>
-        <converters:CollectionToCollectionInCollectionConverter x:Key="CollectionToCollectionInCollectionConverter"/>
         <converters:OwnerPlayerToGridRowConverter x:Key="OwnerPlayerToGridRowConverter"/>
         <converters:ItemsControlToItemsCountConverter x:Key="ItemsControlToItemsCountConverter"/>
         <converters:PlayerNumberToEnabledConverter x:Key="PlayerNumberToEnabledConverter"/>
+        <converters:StonesCountToIsEnabledConverter x:Key="StonesCountToIsEnabledConverter"/>
     </Application.Resources>
 </Application>

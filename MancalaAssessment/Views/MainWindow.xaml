@@ -9,6 +9,5 @@
     <StackPanel>
         <TextBlock Text="{Binding BannerText}" Margin="16" TextAlignment="Center" FontSize="20" FontWeight="Bold" />
         <local:Board x:Name="GameBoard" />
-        <Button Width="128" Margin="16" Click="NewGame_Click">New Game</Button>
     </StackPanel>
 </Window>

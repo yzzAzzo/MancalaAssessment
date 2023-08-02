@@ -16,10 +16,5 @@ namespace MancalaAssessment.Views
             this.DataContext = new MainWindowViewModel();
            
         }
-
-        private void NewGame_Click(object sender, RoutedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
