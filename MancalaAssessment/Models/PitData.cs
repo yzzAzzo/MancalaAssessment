@@ -2,17 +2,17 @@
 
 namespace MancalaAssessment.Models;
 
-public class PitData : INotifyPropertyChanged
+public class PitData : NotifyPropertyBase
 {
 	private int _stones;
-    public event PropertyChangedEventHandler? PropertyChanged;
+   
     public int Stones
 	{
 		get { return _stones; }
         set
         {
             _stones = value;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Stones)));
+            OnPropertyChanged();
         }
 	}
 
@@ -24,7 +24,7 @@ public class PitData : INotifyPropertyChanged
         set
         {
             _ownerPlayer = value;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(OwnerPlayer)));
+            OnPropertyChanged();
         }
 	}
 

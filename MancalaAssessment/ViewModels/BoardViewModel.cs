@@ -12,10 +12,8 @@ using MancalaAssessment.Views;
 
 namespace MancalaAssessment.ViewModels
 {
-    public class BoardViewModel : INotifyPropertyChanged
+    public class BoardViewModel : NotifyPropertyBase
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
-
         private IGameManager _gameManager;
         private GameStatus _gameStatus;
 
@@ -25,7 +23,7 @@ namespace MancalaAssessment.ViewModels
             set
             {
                 _gameStatus = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(GameStatus)));
+                OnPropertyChanged();
             }
         }
 
@@ -38,7 +36,7 @@ namespace MancalaAssessment.ViewModels
             set
             {
                 _playerNumber = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PlayerNumber)));
+                OnPropertyChanged();
             }
         }
 
@@ -50,7 +48,7 @@ namespace MancalaAssessment.ViewModels
             set
             {
                 _stonesPlayer1 = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StonesPlayer1)));
+                OnPropertyChanged();
             }
         }
 
@@ -62,7 +60,7 @@ namespace MancalaAssessment.ViewModels
             set
             {
                 _stonesPlayer2 = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StonesPlayer2)));
+                OnPropertyChanged();
             }
         }
 
@@ -76,7 +74,7 @@ namespace MancalaAssessment.ViewModels
                 if (value != _storePlayer1)
                 {
                     _storePlayer1 = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StorePlayer1)));
+                    OnPropertyChanged();
                 }
             }
         }
@@ -91,7 +89,7 @@ namespace MancalaAssessment.ViewModels
                 if (value != _storePlayer2)
                 {
                     _storePlayer2 = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StorePlayer2)));
+                    OnPropertyChanged();
                 }
             }
         }

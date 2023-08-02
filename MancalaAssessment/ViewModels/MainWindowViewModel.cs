@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel;
+using MancalaAssessment.Models;
 
 namespace MancalaAssessment.ViewModels
 {
-    public class MainWindowViewModel : INotifyPropertyChanged
+    public class MainWindowViewModel : NotifyPropertyBase
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
-
         private string bannerText = "Click \"New Game\" to get started!";
         public string BannerText
         {
@@ -15,7 +14,7 @@ namespace MancalaAssessment.ViewModels
                 if(bannerText != value)
                 {
                     bannerText = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(BannerText)));
+                   OnPropertyChanged();
                 }
             }
         }
