@@ -6,13 +6,11 @@ namespace MancalaAssessment.Models;
 public class BoardState
 {
     public List<int> Board = new List<int>();
-    public GameStatus GameStatus;
     public int PlayerNumber;
 
     public BoardState()
     {
         InitializeBoard();
-        GameStatus = GameStatus.Ongoing;
         PlayerNumber = 1;
     }
 
