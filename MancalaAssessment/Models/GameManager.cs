@@ -33,8 +33,6 @@ namespace MancalaAssessment.Models
             board[pitNumber] = 0;
             pitNumber++;
 
-            //TODO Rethink all of this
-
             while (stoneCount > 0)
             {
                
