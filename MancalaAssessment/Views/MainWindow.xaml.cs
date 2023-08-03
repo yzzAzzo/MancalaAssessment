@@ -9,7 +9,6 @@ namespace MancalaAssessment.Views
     /// </summary>
     public partial class MainWindow : Window
     {
-        BoardViewModel boardViewModel;
         public MainWindow()
         {
             InitializeComponent();

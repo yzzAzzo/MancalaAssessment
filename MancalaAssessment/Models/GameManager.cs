@@ -52,9 +52,6 @@ namespace MancalaAssessment.Models
                 if (stoneCount == 0 && pitNumber < store && pitNumber >= store - (board.Count / 2 - 1) && board[pitNumber] == 1)
                 {
                     // In this case we have finished putting stones on our side in an empty pit.
-                    // note: if we subtract 2(the 2 stores) from board.Count we get the number that the opposing pits index and the
-                    // current one has to add up to. e.g.: board.Count == 14, -2 => 12, so opposing is 12 - pitNumber.
-                    
                     
                     int opposingPitNumber = (board.Count - 2) - pitNumber;
 
